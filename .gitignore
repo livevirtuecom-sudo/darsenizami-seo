@@ -1,0 +1,20 @@
+﻿# WordPress & Dynamic directories
+online/
+wp-admin/
+wp-includes/
+wp-content/
+
+# LMS application subfolder & private configs (maintained separately)
+lms/
+dn-lms-private/
+
+# System & Cache junk
+.DS_Store
+Thumbs.db
+*.log
+*.zip
+*.tar.gz
+*.tmp
+*.bak
+.vscode/
+.idea/

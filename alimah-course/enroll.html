@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, follow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="description" content="Enroll in the Alimah Course Online. Fill in our simple form to connect with our team via WhatsApp and begin your Islamic education journey."><meta property="og:image" content="https://darsenizami.net/share.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:image" content="https://darsenizami.net/share.jpg">
+<title>Enroll in Alimah Course | WhatsApp Enrollment Form</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&amp;family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C; --gold-light: #E8C97A; --gold-dark: #8B6914;
+    --deep: #0E1A14; --deep2: #162110; --green: #1A3A22; --green-mid: #2D5C3A;
+    --cream: #F9F4EA; --cream2: #F0E8D5; --wa-green: #25D366; --wa-dark: #128C7E;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Crimson Pro', serif; background: var(--deep); color: var(--cream); overflow-x: hidden; min-height: 100vh; }
+
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(14,26,20,0.95); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding: 0 5%; display: flex; align-items: center; justify-content: space-between; height: 70px;
+  }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--gold); text-decoration: none; }
+  .nav-logo span { color: var(--cream); font-weight: 400; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--cream2); font-size: 0.95rem; text-decoration: none; transition: color 0.3s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta { background: var(--gold); color: var(--deep) !important; padding: 0.45rem 1.2rem; border-radius: 2px; font-weight: 600 !important; }
+
+  /* HERO */
+  .enroll-hero {
+    padding: 120px 5% 60px;
+    text-align: center;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 40%, rgba(37,211,102,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 50% 30%, rgba(45,92,58,0.35) 0%, transparent 70%),
+      var(--deep);
+  }
+  .wa-icon { font-size: 3.5rem; margin-bottom: 1rem; animation: fadeUp 0.8s ease both; }
+  .hero-badge { display: inline-block; border: 1px solid rgba(201,168,76,0.4); color: var(--gold-light); font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.4rem 1.2rem; margin-bottom: 1.5rem; animation: fadeUp 0.8s 0.1s ease both; }
+  .enroll-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; line-height: 1.1; margin-bottom: 1.2rem; animation: fadeUp 0.8s 0.2s ease both; }
+  .enroll-hero h1 em { color: var(--gold); font-style: normal; }
+  .enroll-hero p { font-size: 1.2rem; color: var(--cream2); max-width: 600px; margin: 0 auto; font-weight: 300; line-height: 1.7; animation: fadeUp 0.8s 0.3s ease both; }
+
+  /* FORM SECTION */
+  .form-section {
+    padding: 60px 5% 100px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 4rem;
+    flex-wrap: wrap;
+  }
+
+  /* FORM CARD */
+  .form-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 8px;
+    padding: 3rem;
+    width: 100%; max-width: 520px;
+    animation: fadeUp 0.9s 0.4s ease both;
+    position: relative;
+    overflow: hidden;
+  }
+  .form-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--wa-dark), var(--wa-green), var(--wa-dark));
+  }
+  .form-card h2 {
+    font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700;
+    margin-bottom: 0.5rem; color: var(--cream);
+  }
+  .form-card .form-subtitle { color: var(--cream2); font-size: 1rem; margin-bottom: 2rem; font-weight: 300; }
+
+  .form-group { margin-bottom: 1.5rem; }
+  .form-group label {
+    display: block; font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.6rem; font-weight: 600;
+  }
+  .form-group input,
+  .form-group select {
+    width: 100%; padding: 0.85rem 1rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 4px; color: var(--cream);
+    font-family: 'Crimson Pro', serif; font-size: 1rem;
+    transition: all 0.3s; outline: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus {
+    border-color: var(--gold); background: rgba(255,255,255,0.08);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.1);
+  }
+  .form-group input::placeholder { color: rgba(249,244,234,0.35); }
+  .form-group select option { background: var(--deep2); color: var(--cream); }
+
+  .phone-wrapper { display: flex; gap: 0.5rem; }
+  .phone-prefix {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 4px; padding: 0.85rem 0.8rem; color: var(--cream2);
+    font-family: 'Crimson Pro', serif; font-size: 0.95rem; white-space: nowrap;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+  .phone-wrapper input { flex: 1; }
+
+  .wa-submit {
+    width: 100%; padding: 1rem 2rem;
+    background: var(--wa-green); color: #fff;
+    border: none; border-radius: 4px; cursor: pointer;
+    font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700;
+    letter-spacing: 0.05em; transition: all 0.3s;
+    display: flex; align-items: center; justify-content: center; gap: 0.7rem;
+    margin-top: 0.5rem;
+  }
+  .wa-submit:hover { background: var(--wa-dark); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(37,211,102,0.25); }
+  .wa-submit:active { transform: translateY(0); }
+  .wa-icon-btn { font-size: 1.3rem; }
+
+  .form-note { text-align: center; margin-top: 1rem; color: rgba(249,244,234,0.5); font-size: 0.85rem; }
+  .form-note a { color: var(--gold); text-decoration: none; }
+
+  /* TRUST BADGES */
+  .trust-col { max-width: 340px; width: 100%; animation: fadeUp 0.9s 0.5s ease both; }
+  .trust-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--gold-light); margin-bottom: 2rem; }
+  .trust-item { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.8rem; }
+  .trust-icon { font-size: 1.8rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .trust-item h4 { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--cream); margin-bottom: 0.3rem; }
+  .trust-item p { color: var(--cream2); font-size: 0.9rem; line-height: 1.5; font-weight: 300; }
+
+  .divider { border: none; border-top: 1px solid rgba(201,168,76,0.1); margin: 2rem 0; }
+
+  .direct-wa {
+    background: rgba(37,211,102,0.08); border: 1px solid rgba(37,211,102,0.25);
+    border-radius: 8px; padding: 1.5rem; text-align: center;
+  }
+  .direct-wa p { color: var(--cream2); font-size: 0.95rem; margin-bottom: 1rem; }
+  .direct-wa a {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--wa-green); color: #fff; padding: 0.7rem 1.5rem;
+    border-radius: 4px; font-family: 'Playfair Display', serif; font-weight: 700;
+    text-decoration: none; font-size: 0.95rem; transition: all 0.3s;
+  }
+  .direct-wa a:hover { background: var(--wa-dark); }
+
+  /* SUCCESS */
+  #success-msg {
+    display: none; text-align: center; padding: 2rem;
+    background: rgba(37,211,102,0.08); border: 1px solid rgba(37,211,102,0.3);
+    border-radius: 8px; margin-top: 1rem;
+  }
+  #success-msg .check { font-size: 3rem; margin-bottom: 0.8rem; }
+  #success-msg h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--wa-green); margin-bottom: 0.5rem; }
+  #success-msg p { color: var(--cream2); font-weight: 300; }
+
+  footer { background: var(--deep2); border-top: 1px solid rgba(201,168,76,0.15); padding: 3rem 5%; text-align: center; color: rgba(249,244,234,0.5); font-size: 0.9rem; }
+  footer a { color: var(--gold); text-decoration: none; }
+  .footer-links { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 768px) { .nav-links { display: none; } .form-section { flex-direction: column; align-items: center; } .form-card { padding: 2rem 1.5rem; } }
+</style>
+<link rel="canonical" href="https://darsenizami.net/alimah-course/enroll.html"><meta property="og:url" content="https://darsenizami.net/alimah-course/enroll.html"><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "EducationalOrganization", "@id": "https://darsenizami.net/#institute", "name": "Dars-e-Nizami Online Institute", "alternateName": ["Darse Nizami Online", "Dars Nizami Online"], "url": "https://darsenizami.net/", "logo": "https://darsenizami.net/logo.png", "email": "info@darsenizami.net", "contactPoint": {"@type": "ContactPoint", "contactType": "admissions", "url": "https://wa.me/923132020392"}}, {"@type": "WebSite", "@id": "https://darsenizami.net/#website", "name": "Dars-e-Nizami Online Institute", "url": "https://darsenizami.net/", "publisher": {"@id": "https://darsenizami.net/#institute"}}, {"@type": "WebPage", "@id": "https://darsenizami.net/alimah-course/enroll.html#page", "url": "https://darsenizami.net/alimah-course/enroll.html", "name": "Enroll in Alimah Course | WhatsApp Enrollment Form", "isPartOf": {"@id": "https://darsenizami.net/#website"}, "about": {"@id": "https://darsenizami.net/#institute"}, "inLanguage": "en"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://darsenizami.net/"}, {"@type": "ListItem", "position": 2, "name": "Enroll in Alimah Course | WhatsApp Enrollment Form", "item": "https://darsenizami.net/alimah-course/enroll.html"}]}]}</script><script async src="https://www.googletagmanager.com/gtag/js?id=GT-WRDMH29V"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','GT-WRDMH29V');</script></head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Alimah<span>Course</span></a>
+  <ul class="nav-links">
+    <li><a href="alimah-course-usa.html">USA</a></li>
+    <li><a href="alimah-course-canada.html">Canada</a></li>
+    <li><a href="alimah-course-uk.html">UK</a></li>
+    <li><a href="enroll.html" class="nav-cta">Enroll Now</a></li>
+  </ul>
+</nav>
+
+<main style="max-width:1080px;margin:24px auto;padding:22px"><h2>Apply through the student LMS</h2><p>This page’s WhatsApp form is for enquiries. For an admission application, create an LMS account and complete the application and payment steps.</p><p><a class="button" href="/lms/">Create an account / Sign in</a><a class="button secondary" href="https://wa.me/923132020392">Ask admissions on WhatsApp</a></p></main><section class="enroll-hero">
+  <div class="wa-icon">📲</div>
+  <div class="hero-badge">Online admission enquiries</div>
+  <h1>Enroll in the <em>Alimah Course</em></h1>
+  <p>Fill in the form below and we will contact you on WhatsApp as soon as the team is available with full details about the program, fees, and class schedule.</p>
+</section>
+
+<div class="form-section">
+
+  <!-- FORM CARD -->
+  <div class="form-card">
+    <h2>WhatsApp Enrollment Form</h2>
+    <p class="form-subtitle">All fields are required. We will reach out to you directly via WhatsApp.</p>
+
+    <div id="the-form">
+      <div class="form-group">
+        <label for="full-name">Your Full Name</label>
+        <input type="text" id="full-name" placeholder="e.g. Sister Fatima Ahmed" autocomplete="name">
+      </div>
+
+      <div class="form-group">
+        <label for="country">Your Country</label>
+        <select id="country">
+          <option value="" disabled selected>Select your country…</option>
+          <option value="USA">🇺🇸 United States (USA)</option>
+          <option value="Canada">🇨🇦 Canada</option>
+          <option value="UK">🇬🇧 United Kingdom (UK)</option>
+          <option value="Australia">🇦🇺 Australia</option>
+          <option value="Pakistan">🇵🇰 Pakistan</option>
+          <option value="India">🇮🇳 India</option>
+          <option value="UAE">🇦🇪 United Arab Emirates</option>
+          <option value="Saudi Arabia">🇸🇦 Saudi Arabia</option>
+          <option value="Other">🌍 Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="whatsapp">WhatsApp Number (with country code)</label>
+        <div class="phone-wrapper">
+          <div class="phone-prefix">📱 +</div>
+          <input type="tel" id="whatsapp" placeholder="e.g. 447912345678" autocomplete="tel">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="program">Preferred Program</label>
+        <select id="program">
+          <option value="" disabled selected>Select a program…</option>
+          <option value="Full Alimah Course (7 Years)">Full Alimah Course (7 Years)</option>
+          <option value="Diploma in Islamic Studies (2 Years)">Diploma in Islamic Studies (2 Years)</option>
+          <option value="Quran &amp; Tajweed Course">Quran &amp; Tajweed Course</option>
+          <option value="Arabic Language Course">Arabic Language Course</option>
+          <option value="Not sure – please advise me">Not sure – please advise me</option>
+        </select>
+      </div>
+
+      <button class="wa-submit" onclick="sendWhatsApp()">
+        <span class="wa-icon-btn">💬</span>
+        Send to WhatsApp &amp; Enroll
+      </button>
+
+      <p class="form-note">By submitting you agree to be contacted via WhatsApp at <a href="https://wa.me/923132020392" target="_blank">+92 313 202 0392</a></p>
+    </div>
+
+    <div id="success-msg">
+      <div class="check">✅</div>
+      <h3>JazakAllah Khair!</h3>
+      <p>Your enrollment request has been sent to our WhatsApp. We will contact you as soon as the team is available, In Sha Allah.</p>
+      <br>
+      <p style="font-size:0.9rem;color:rgba(249,244,234,0.5)">If WhatsApp didn't open automatically, please message us directly at <strong style="color:var(--wa-green)">+92 313 202 0392</strong></p>
+    </div>
+  </div>
+
+  <!-- TRUST COLUMN -->
+  <div class="trust-col">
+    <h3 class="trust-title">What Happens After You Enroll?</h3>
+
+    <div class="trust-item">
+      <div class="trust-icon">💬</div>
+      <div>
+        <h4>Step 1 – WhatsApp Contact</h4>
+        <p>Our admissions team will message you on WhatsApp as soon as the team is available, In Sha Allah.</p>
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">📋</div>
+      <div>
+        <h4>Step 2 – Program Guidance</h4>
+        <p>We'll discuss which program, schedule, and class batch is best suited for you.</p>
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">🎓</div>
+      <div>
+        <h4>Step 3 – Free Trial Class</h4>
+        <p>You'll be invited to attend a free trial class before making any commitment.</p>
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">✅</div>
+      <div>
+        <h4>Step 4 – Begin Your Journey</h4>
+        <p>Upon confirmation, you'll be added to your class group and studies begin.</p>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="direct-wa">
+      <p>Prefer to message us directly on WhatsApp right now?</p>
+      <a href="https://wa.me/923132020392?text=Assalamu%20Alaikum%2C%20I%20am%20interested%20in%20enrolling%20in%20the%20Alimah%20Course.%20Please%20provide%20details." target="_blank" rel="noopener">
+        💬 Chat on WhatsApp
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="alimah-course-usa.html">USA</a>
+    <a href="alimah-course-canada.html">Canada</a>
+    <a href="alimah-course-uk.html">UK</a>
+    <a href="enroll.html">Enroll</a>
+  </div>
+  <p>© 2024 Alimah Course Online. Dedicated to the Islamic education of sisters worldwide.</p>
+</footer>
+
+<script>
+function sendWhatsApp() {
+  const name = document.getElementById('full-name').value.trim();
+  const country = document.getElementById('country').value;
+  const whatsapp = document.getElementById('whatsapp').value.trim();
+  const program = document.getElementById('program').value;
+
+  // Validation
+  if (!name) { alert('Please enter your full name.'); document.getElementById('full-name').focus(); return; }
+  if (!country) { alert('Please select your country.'); document.getElementById('country').focus(); return; }
+  if (!whatsapp) { alert('Please enter your WhatsApp number.'); document.getElementById('whatsapp').focus(); return; }
+  if (!program) { alert('Please select a program.'); document.getElementById('program').focus(); return; }
+
+  // Sanitize phone number
+  const cleanPhone = whatsapp.replace(/[^0-9]/g, '');
+  if (cleanPhone.length < 7) { alert('Please enter a valid WhatsApp number including the country code.'); return; }
+
+  // Build WhatsApp message
+  const message =
+    `Assalamu Alaikum,\n\n` +
+    `I would like to enroll in the Alimah Course. Here are my details:\n\n` +
+    `📛 *Name:* ${name}\n` +
+    `🌍 *Country:* ${country}\n` +
+    `📱 *My WhatsApp:* +${cleanPhone}\n` +
+    `📚 *Program:* ${program}\n\n` +
+    `Please provide me with further details. JazakAllah Khair.`;
+
+  const encodedMessage = encodeURIComponent(message);
+  const waURL = `https://wa.me/923132020392?text=${encodedMessage}`;
+
+  // Open WhatsApp
+  window.open(waURL, '_blank');
+
+  // Show success message
+  document.getElementById('the-form').style.display = 'none';
+  document.getElementById('success-msg').style.display = 'block';
+}
+
+// Allow Enter key on inputs
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') sendWhatsApp();
+});
+</script>
+<nav aria-label="Institute and policies" style="padding:24px;text-align:center;display:flex;gap:18px;flex-wrap:wrap;justify-content:center;border-top:1px solid #ddd"><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/study-guides.html">Study guides</a><a href="/privacy.html">Privacy & cookies</a><a href="/terms.html">Terms</a><a href="/copyright.html">Copyright</a><a href="/editorial-policy.html">Editorial policy</a></nav></body>
+</html>

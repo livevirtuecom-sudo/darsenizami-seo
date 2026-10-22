@@ -1,0 +1,19 @@
+﻿User-agent: *
+Allow: /
+
+# Disallow portal & utility endpoints
+Disallow: /cms/
+Disallow: /lms/
+Disallow: /alimah-course/enroll.html
+Disallow: /dn-lms-hosting-upload.zip
+
+# Disallow WordPress feed bloat traps
+Disallow: /online/*/feed/
+Disallow: /online/feed/
+Disallow: /*/feed/
+Disallow: /wp-admin/
+Disallow: /wp-login.php
+
+# Sitemaps
+Sitemap: https://darsenizami.net/sitemap.xml
+Sitemap: https://darsenizami.net/online/sitemap_index.xml

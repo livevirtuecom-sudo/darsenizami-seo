@@ -1,0 +1,106 @@
+﻿# ======================================================================
+# darsenizami.net — Optimized Apache Configuration for StackCP
+# ======================================================================
+
+# ----------------------------------------------------------------------
+# 1. Canonicalization: Force HTTPS & Force Non-WWW
+# ----------------------------------------------------------------------
+RewriteEngine On
+RewriteBase /
+
+# Force HTTPS
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://darsenizami.net%{REQUEST_URI} [L,R=301]
+
+# Force Non-WWW
+RewriteCond %{HTTP_HOST} ^www\.darsenizami\.net$ [NC]
+RewriteRule ^(.*)$ https://darsenizami.net/$1 [L,R=301]
+
+# Block leaked archive
+RewriteRule ^dn-lms-hosting-upload\.zip$ - [G,L]
+
+# ----------------------------------------------------------------------
+# 2. WordPress & Subdirectory Pass-through
+# ----------------------------------------------------------------------
+RewriteRule ^online(/.*)?$ - [L]
+RewriteRule ^lms(/.*)?$ - [L]
+
+# WordPress AMP URLs -> /online/
+RewriteCond %{REQUEST_URI} !^/online/
+RewriteRule ^(.+)/amp/?$ https://darsenizami.net/online/$1/ [R=301,L]
+
+# Old WordPress post URLs at root -> /online/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/(online|books|cms|lms|darulifta|ruqya-center|alimah-course|quran-for-girls)(/|$)
+RewriteCond %{REQUEST_URI} !\.(html|php|xml|txt|css|js|png|jpe?g|gif|svg|webp|ico|pdf|zip)$ [NC]
+RewriteRule ^(.+?)/?$ https://darsenizami.net/online/$1/ [R=301,L]
+
+# ----------------------------------------------------------------------
+# 3. Canonical Public-Page Aliases & 301 Redirects
+# ----------------------------------------------------------------------
+RewriteRule ^index\.html$ https://darsenizami.net/ [R=301,L,NE]
+RewriteRule ^alimah-course/index\.html$ https://darsenizami.net/alimah-course/ [R=301,L,NE]
+RewriteRule ^faq/?$ https://darsenizami.net/faq.html [R=301,L,NE]
+RewriteRule ^contact/?$ https://darsenizami.net/contact.html [R=301,L,NE]
+RewriteRule ^courses/?$ https://darsenizami.net/dars-e-nizami-course.html [R=301,L,NE]
+RewriteRule ^darul-ifta/?$ https://darsenizami.net/darulifta/ [R=301,L,NE]
+RewriteRule ^mufti-online/?$ https://darsenizami.net/darulifta/ [R=301,L,NE]
+
+# ----------------------------------------------------------------------
+# 4. Gzip / Deflate Compression
+# ----------------------------------------------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript
+  AddOutputFilterByType DEFLATE application/javascript application/x-javascript application/json
+  AddOutputFilterByType DEFLATE application/xml application/xhtml+xml application/rss+xml
+  AddOutputFilterByType DEFLATE image/svg+xml font/ttf font/otf font/woff font/woff2
+</IfModule>
+
+# ----------------------------------------------------------------------
+# 5. Browser Caching for Core Web Vitals (mod_expires & mod_headers)
+# ----------------------------------------------------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 month"
+
+  ExpiresByType text/html "access plus 1 hour"
+  ExpiresByType text/xml "access plus 1 hour"
+  ExpiresByType application/xml "access plus 1 hour"
+  ExpiresByType application/rss+xml "access plus 1 hour"
+  ExpiresByType application/json "access plus 0 seconds"
+
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType text/javascript "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType application/x-javascript "access plus 1 year"
+
+  ExpiresByType image/jpg "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+
+  ExpiresByType font/ttf "access plus 1 year"
+  ExpiresByType font/otf "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+  # Security Headers
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+
+  # Static asset immutable caching
+  <FilesMatch "\.(ico|jpe?g|png|gif|webp|svg|css|js|woff2?|ttf|otf)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(html|php)$">
+    Header set Cache-Control "public, max-age=3600, must-revalidate"
+  </FilesMatch>
+</IfModule>
