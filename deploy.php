@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env php
+#!/usr/bin/env php
 <?php
 declare(strict_types=1);
 if (PHP_SAPI !== 'cli') { exit(1); }
@@ -36,7 +36,7 @@ $iterator = new RecursiveIteratorIterator(
     RecursiveIteratorIterator::SELF_FIRST
 );
 
-$exclude = ['.git', '.gitignore', '.cpanel.yml', 'README.md', 'deploy.php', 'deploy.sh'];
+$exclude = ['.git', '.gitignore', '.gitattributes', '.cpanel.yml', 'README.md', 'deploy.php', 'deploy.sh'];
 $count = 0;
 $backedUp = 0;
 
@@ -71,4 +71,4 @@ foreach ($iterator as $item) {
 echo "SUCCESS:\n";
 echo "- $backedUp existing files safely backed up to $backupDir\n";
 echo "- $count SEO files deployed cleanly to public_html\n";
-echo "- /lms/, /online/ (WordPress), and private databases were NOT touched.\n";
+echo "- Subdirectories /lms/ and /online/ were preserved.\n";
