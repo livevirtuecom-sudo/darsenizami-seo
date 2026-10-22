@@ -1,0 +1,4 @@
+﻿---
+deployment:
+  tasks:
+    - php /home/sites/38b/e/ebb1a48b11/repositories/darsenizami-seo/deploy.php

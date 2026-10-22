@@ -5,6 +5,7 @@ if (PHP_SAPI !== 'cli') { exit(1); }
 
 $repo = __DIR__;
 $candidates = [
+    '/home/sites/38b/e/ebb1a48b11/public_html',
     dirname($repo, 2) . '/public_html',
     dirname($repo) . '/public_html',
     $argv[1] ?? ''
@@ -35,7 +36,7 @@ $iterator = new RecursiveIteratorIterator(
     RecursiveIteratorIterator::SELF_FIRST
 );
 
-$exclude = ['.git', '.gitignore', 'README.md', 'deploy.php', 'deploy.sh'];
+$exclude = ['.git', '.gitignore', '.cpanel.yml', 'README.md', 'deploy.php', 'deploy.sh'];
 $count = 0;
 $backedUp = 0;
 
