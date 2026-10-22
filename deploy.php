@@ -21,7 +21,7 @@ if (!$public) {
     exit(1);
 }
 
-// 1. Restore original server .htaccess from backup
+// 1. Restore original server .htaccess from backup and apply StackCDN-safe SEO rewrites
 $siteRoot = dirname($public);
 $backups = glob($siteRoot . '/dn-seo-backup-*');
 if ($backups) {
@@ -34,24 +34,22 @@ if ($backups) {
         // Strip any previously added SEO block
         $cleanOrig = preg_replace('/# ---- DARSENIZAMI SEO RULES START ----.*?# ---- DARSENIZAMI SEO RULES END ----\s*/s', '', $origHtaccess);
         
+        // Safe SEO rules WITHOUT %{HTTPS} != on to prevent StackCDN proxy loop
         $seoHeader = "# ---- DARSENIZAMI SEO RULES START ----\n"
             . "<IfModule mod_rewrite.c>\n"
             . "RewriteEngine On\n"
             . "RewriteBase /\n"
-            . "# Force HTTPS\n"
-            . "RewriteCond %{HTTPS} !=on\n"
-            . "RewriteRule ^ https://darsenizami.net%{REQUEST_URI} [L,R=301]\n"
             . "# Force Non-WWW\n"
-            . "RewriteCond %{HTTP_HOST} ^www\.darsenizami\.net$ [NC]\n"
+            . "RewriteCond %{HTTP_HOST} ^www\\.darsenizami\\.net$ [NC]\n"
             . "RewriteRule ^(.*)$ https://darsenizami.net/$1 [L,R=301]\n"
             . "# Block leaked archive\n"
-            . "RewriteRule ^dn-lms-hosting-upload\.zip$ - [G,L]\n"
+            . "RewriteRule ^dn-lms-hosting-upload\\.zip$ - [G,L]\n"
             . "# Subdirectory pass-through\n"
             . "RewriteRule ^online(/.*)?$ - [L]\n"
             . "RewriteRule ^lms(/.*)?$ - [L]\n"
             . "# Canonical aliases\n"
-            . "RewriteRule ^index\.html$ https://darsenizami.net/ [R=301,L,NE]\n"
-            . "RewriteRule ^alimah-course/index\.html$ https://darsenizami.net/alimah-course/ [R=301,L,NE]\n"
+            . "RewriteRule ^index\\.html$ https://darsenizami.net/ [R=301,L,NE]\n"
+            . "RewriteRule ^alimah-course/index\\.html$ https://darsenizami.net/alimah-course/ [R=301,L,NE]\n"
             . "RewriteRule ^faq/?$ https://darsenizami.net/faq.html [R=301,L,NE]\n"
             . "RewriteRule ^contact/?$ https://darsenizami.net/contact.html [R=301,L,NE]\n"
             . "RewriteRule ^courses/?$ https://darsenizami.net/dars-e-nizami-course.html [R=301,L,NE]\n"
@@ -61,11 +59,11 @@ if ($backups) {
             
         file_put_contents($public . '/.htaccess', $seoHeader . $cleanOrig);
         chmod($public . '/.htaccess', 0644);
-        echo "Restored original server .htaccess and prepended safe SEO rewrites.\n";
+        echo "Restored original server .htaccess and applied CDN-safe SEO rules.\n";
     }
 }
 
-// 2. Deploy HTML files, robots.txt, sitemaps (never overwriting with standalone .htaccess)
+// 2. Deploy HTML files, robots.txt, sitemaps
 $iterator = new RecursiveIteratorIterator(
     new RecursiveDirectoryIterator($repo, RecursiveDirectoryIterator::SKIP_DOTS),
     RecursiveIteratorIterator::SELF_FIRST
