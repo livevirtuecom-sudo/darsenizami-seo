@@ -28,7 +28,7 @@ Production Git repository for `https://darsenizami.net` web root (`public_html/`
 1. Log into your **StackCP Control Panel**.
 2. Go to **Web Files** > **Git Version Control**.
 3. Add or configure the repository:
-   - **Clone URL**: `https://github.com/smtalhadv-web/darsenizami-seo.git` (or your repository URL)
+   - **Clone URL**: `https://github.com/livevirtuecom-sudo/darsenizami-seo.git` (or your repository URL)
    - **Branch**: `main`
    - **Target Directory**: `public_html`
 4. Trigger Deploy to sync files directly into `public_html`.
