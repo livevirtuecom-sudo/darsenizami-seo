@@ -25,16 +25,17 @@ if (!$public) {
 $siteRoot = dirname($public);
 $backups = glob($siteRoot . '/dn-seo-backup-*');
 if ($backups) {
-    rsort($backups);
+    sort($backups); // Earliest backup contains pristine original server configuration
     $latestBackup = $backups[0];
     if (file_exists($latestBackup . '/.htaccess')) {
         echo "Found original .htaccess in $latestBackup, restoring server rules...\n";
         $origHtaccess = file_get_contents($latestBackup . '/.htaccess');
         
-        // Strip any previously added SEO block
+        // Strip any previously added SEO block or stray HTTPS loop rules
         $cleanOrig = preg_replace('/# ---- DARSENIZAMI SEO RULES START ----.*?# ---- DARSENIZAMI SEO RULES END ----\s*/s', '', $origHtaccess);
+        $cleanOrig = preg_replace('/RewriteCond\s+%{HTTPS}\s+!=on\s*[\r\n]+\s*RewriteRule\s+.*?(?:[\r\n]+|$)/i', '', (string)$cleanOrig);
         
-        // Safe SEO rules WITHOUT %{HTTPS} != on to prevent StackCDN proxy loop
+        // Safe SEO rules WITHOUT %{HTTPS} != on (StackCDN edge handles SSL termination)
         $seoHeader = "# ---- DARSENIZAMI SEO RULES START ----\n"
             . "<IfModule mod_rewrite.c>\n"
             . "RewriteEngine On\n"
@@ -47,13 +48,35 @@ if ($backups) {
             . "# Subdirectory pass-through\n"
             . "RewriteRule ^online(/.*)?$ - [L]\n"
             . "RewriteRule ^lms(/.*)?$ - [L]\n"
-            . "# Canonical aliases\n"
+            . "# Canonical aliases (checked against client request line to prevent DirectoryIndex loops)\n"
+            . "RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\\s/+index\\.html[\\s?] [NC]\n"
             . "RewriteRule ^index\\.html$ https://darsenizami.net/ [R=301,L,NE]\n"
+            . "RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\\s/+alimah-course/index\\.html[\\s?] [NC]\n"
             . "RewriteRule ^alimah-course/index\\.html$ https://darsenizami.net/alimah-course/ [R=301,L,NE]\n"
             . "RewriteRule ^faq/?$ https://darsenizami.net/faq.html [R=301,L,NE]\n"
             . "RewriteRule ^contact/?$ https://darsenizami.net/contact.html [R=301,L,NE]\n"
             . "RewriteRule ^courses/?$ https://darsenizami.net/dars-e-nizami-course.html [R=301,L,NE]\n"
             . "RewriteRule ^darul-ifta/?$ https://darsenizami.net/darulifta/ [R=301,L,NE]\n"
+            . "</IfModule>\n"
+            . "\n"
+            . "<IfModule mod_deflate.c>\n"
+            . "  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript\n"
+            . "  AddOutputFilterByType DEFLATE application/javascript application/x-javascript application/json\n"
+            . "  AddOutputFilterByType DEFLATE application/xml application/xhtml+xml application/rss+xml\n"
+            . "  AddOutputFilterByType DEFLATE image/svg+xml font/ttf font/otf font/woff font/woff2\n"
+            . "</IfModule>\n"
+            . "\n"
+            . "<IfModule mod_expires.c>\n"
+            . "  ExpiresActive On\n"
+            . "  ExpiresDefault \"access plus 1 month\"\n"
+            . "  ExpiresByType text/html \"access plus 1 hour\"\n"
+            . "  ExpiresByType text/css \"access plus 1 year\"\n"
+            . "  ExpiresByType application/javascript \"access plus 1 year\"\n"
+            . "  ExpiresByType image/jpeg \"access plus 1 year\"\n"
+            . "  ExpiresByType image/png \"access plus 1 year\"\n"
+            . "  ExpiresByType image/webp \"access plus 1 year\"\n"
+            . "  ExpiresByType image/svg+xml \"access plus 1 year\"\n"
+            . "  ExpiresByType font/woff2 \"access plus 1 year\"\n"
             . "</IfModule>\n"
             . "# ---- DARSENIZAMI SEO RULES END ----\n\n";
             
