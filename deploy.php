@@ -21,54 +21,73 @@ if (!$public) {
     exit(1);
 }
 
-// 1. Create a safe timestamped backup folder outside public_html
-$backupDir = dirname($public) . '/dn-seo-backup-' . gmdate('Ymd-His');
-if (!is_dir($backupDir)) {
-    mkdir($backupDir, 0700, true);
+// 1. Restore original server .htaccess from backup
+$siteRoot = dirname($public);
+$backups = glob($siteRoot . '/dn-seo-backup-*');
+if ($backups) {
+    rsort($backups);
+    $latestBackup = $backups[0];
+    if (file_exists($latestBackup . '/.htaccess')) {
+        echo "Found original .htaccess in $latestBackup, restoring server rules...\n";
+        $origHtaccess = file_get_contents($latestBackup . '/.htaccess');
+        
+        // Strip any previously added SEO block
+        $cleanOrig = preg_replace('/# ---- DARSENIZAMI SEO RULES START ----.*?# ---- DARSENIZAMI SEO RULES END ----\s*/s', '', $origHtaccess);
+        
+        $seoHeader = "# ---- DARSENIZAMI SEO RULES START ----\n"
+            . "<IfModule mod_rewrite.c>\n"
+            . "RewriteEngine On\n"
+            . "RewriteBase /\n"
+            . "# Force HTTPS\n"
+            . "RewriteCond %{HTTPS} !=on\n"
+            . "RewriteRule ^ https://darsenizami.net%{REQUEST_URI} [L,R=301]\n"
+            . "# Force Non-WWW\n"
+            . "RewriteCond %{HTTP_HOST} ^www\.darsenizami\.net$ [NC]\n"
+            . "RewriteRule ^(.*)$ https://darsenizami.net/$1 [L,R=301]\n"
+            . "# Block leaked archive\n"
+            . "RewriteRule ^dn-lms-hosting-upload\.zip$ - [G,L]\n"
+            . "# Subdirectory pass-through\n"
+            . "RewriteRule ^online(/.*)?$ - [L]\n"
+            . "RewriteRule ^lms(/.*)?$ - [L]\n"
+            . "# Canonical aliases\n"
+            . "RewriteRule ^index\.html$ https://darsenizami.net/ [R=301,L,NE]\n"
+            . "RewriteRule ^alimah-course/index\.html$ https://darsenizami.net/alimah-course/ [R=301,L,NE]\n"
+            . "RewriteRule ^faq/?$ https://darsenizami.net/faq.html [R=301,L,NE]\n"
+            . "RewriteRule ^contact/?$ https://darsenizami.net/contact.html [R=301,L,NE]\n"
+            . "RewriteRule ^courses/?$ https://darsenizami.net/dars-e-nizami-course.html [R=301,L,NE]\n"
+            . "RewriteRule ^darul-ifta/?$ https://darsenizami.net/darulifta/ [R=301,L,NE]\n"
+            . "</IfModule>\n"
+            . "# ---- DARSENIZAMI SEO RULES END ----\n\n";
+            
+        file_put_contents($public . '/.htaccess', $seoHeader . $cleanOrig);
+        chmod($public . '/.htaccess', 0644);
+        echo "Restored original server .htaccess and prepended safe SEO rewrites.\n";
+    }
 }
 
-echo "=== DARSENIZAMI.NET SEO DEPLOYMENT ===\n";
-echo "Target Web Root: $public\n";
-echo "Safety Backup Location: $backupDir\n\n";
-
+// 2. Deploy HTML files, robots.txt, sitemaps (never overwriting with standalone .htaccess)
 $iterator = new RecursiveIteratorIterator(
     new RecursiveDirectoryIterator($repo, RecursiveDirectoryIterator::SKIP_DOTS),
     RecursiveIteratorIterator::SELF_FIRST
 );
 
-$exclude = ['.git', '.gitignore', '.gitattributes', '.cpanel.yml', 'README.md', 'deploy.php', 'deploy.sh'];
+$exclude = ['.git', '.gitignore', '.gitattributes', '.cpanel.yml', 'README.md', 'deploy.php', 'deploy.sh', '.htaccess'];
 $count = 0;
-$backedUp = 0;
 
 foreach ($iterator as $item) {
     $subPath = str_replace('\\', '/', $iterator->getSubPathname());
     $firstPart = explode('/', $subPath)[0];
     if (in_array($firstPart, $exclude, true)) continue;
-    
-    // Safety check: Never touch lms or online subdirectories
     if ($firstPart === 'lms' || $firstPart === 'online' || $firstPart === 'cms') continue;
 
     $target = $public . '/' . $subPath;
-    $bTarget = $backupDir . '/' . $subPath;
-
     if ($item->isDir()) {
         if (!is_dir($target)) mkdir($target, 0755, true);
-        if (!is_dir($bTarget)) mkdir($bTarget, 0700, true);
     } else {
-        // Backup existing file before overwriting
-        if (file_exists($target)) {
-            $bParent = dirname($bTarget);
-            if (!is_dir($bParent)) mkdir($bParent, 0700, true);
-            copy($target, $bTarget);
-            $backedUp++;
-        }
         copy($item->getPathname(), $target);
         chmod($target, 0644);
         $count++;
     }
 }
 
-echo "SUCCESS:\n";
-echo "- $backedUp existing files safely backed up to $backupDir\n";
-echo "- $count SEO files deployed cleanly to public_html\n";
-echo "- Subdirectories /lms/ and /online/ were preserved.\n";
+echo "SUCCESS: Restored live routing and synced $count SEO pages.\n";
